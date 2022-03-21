@@ -22,6 +22,8 @@ ext {
 	set('springCloudVersion', "2021.0.1")
 }
 
+def activeProfile = project.hasProperty('profile') ? project.hasProperty('profile') : 'local'
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
@@ -33,6 +35,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.cloud:spring-cloud-starter'
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-fabric8-config'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 	implementation 'org.springframework.kafka:spring-kafka'
 	implementation 'org.springframework.session:spring-session-core'
@@ -55,3 +58,11 @@ dependencyManagement {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+bootRun {
+	systemProperty 'spring.profiles.active', activeProfile
+	if (project.hasProperty('args')) {
+		args project.args.split('\\s+')
+	}
+}
+
