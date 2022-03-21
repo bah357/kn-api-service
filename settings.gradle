@@ -1,2 +1,3 @@
 rootProject.name = 'kn-api-service'
+include 'demo'
 
