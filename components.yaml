@@ -1,0 +1,3190 @@
+components:
+  messages:
+    StockTransferOrderCreated:
+      summary: Stock Transfer Order created event data
+      tags:
+        - name: PTDS
+        - name: STO
+      payload:
+        type: object
+        properties:
+          eventTimestamp:
+            type: string
+            description: 'Date and time in UTC format when event is created/updated.'
+            examples:
+              - '2021-12-02T09:01:41Z'
+          eventType:
+            type: string
+            description: 'Stock transfer order event type.'
+            examples:
+              - 'STO_CREATED'
+          productTransferId:
+            type: string
+            description: 'In the same transfer flow, the product transfer ID in all documents(STO/DL/GI/GR) are the same.In intra-company, product transfer ID is intra-STO ID. In inter-company, product transfer ID is last STO/PO ID.'
+            examples:
+              - 'AP-4900384239'
+          stockTransferOrderNumber:
+            type: string
+            description: 'Purchasing order number created by the receiving plant.'
+            examples:
+              - '4900384239'
+          stockTransferOrderId:
+            type: string
+            description: 'Purchase order ID is unique identifier among different stripe system(EU,AP,NA).'
+            examples:
+              - 'AP-4900384239'
+          stockTransferOrderCreationDate:
+            type: string
+            description: 'Date and time in which the stock transfer order was original created.'
+            examples:
+              - '2021-11-30T09:00:00Z'
+          documentType:
+            type: string
+            description: 'Code for document type in ZEMA(EMPASS supply PO) and UB (stock transfer order) only.'
+            examples:
+              - 'UB'
+              - 'ZEMA'
+              - 'ZFIX'
+              - 'ZEML'
+          sourceSystemAtDestination:
+            type: string
+            description: 'Source system defines the source SAP instance from which the stock transfer order was created from (destination plant).'
+            examples:
+              - 'AP'
+              - 'EU'
+              - 'NA'
+          sourceSystemAtSource:
+            type: string
+            description: 'Source system defines the source SAP instance from which the stock transfer order was created from (source plant).'
+            examples:
+              - 'AP'
+              - 'EU'
+              - 'NA'
+          timeZoneAtSource:
+            type: string
+            description: 'Source system time zone can be used for converting date fields to UTC format or local date.'
+            examples:
+              - 'UTC+08:00'
+          timeZoneAtDestination:
+            type: string
+            description: 'Destination system time zone can be used for converting date fields to UTC format or local date.'
+            examples:
+              - 'UTC+08:00'
+          referenceNumber:
+            type: string
+            description: 'This identifier is relevant when the order is part of a multi-step transfer and this reference is useful to link the documents associated with the same transfer.'
+            examples:
+              - '4801131413te'
+          supportingDocuments:
+            type: ["null", array]
+            description: 'Only in inter-company within zone and cross zone case. Collect and order all the selling and purchase document ID of the same transaction in this field.'
+            examples: ["","","","","","","","AP-4900384239"]
+          incompleteFlow:
+            type: ["null", string]
+            description: 'Only in inter-company within zone and cross zone case. If there is 3rd party on the transaction, this field will show Y.'
+            examples:
+              - 'Y'
+          deficientIndicator:
+            type: ["null", string]
+            description: 'If cannot calculate product transfer type or document position, this field will show deficient reason.'
+            examples:
+              - 'No Document Position'
+              - 'No Product Transfer Type'
+          vendor:
+            type: object
+            properties:
+              number:
+                type: string
+                description: 'Vendor key without leading zero.'
+                examples:
+                  - '1060Z11'
+              id:
+                type: string
+                description: 'Unique vendor ID in NA,AP or EU system.'
+                examples:
+                  - 'AP-1060Z11'
+              key:
+                type: string
+                description: 'Vendor key for the order. This field is used in this scenarios where logical plant purchases from a 3rd party, and we then transfer the material through an STO. The Vendor here should be the 3rd party. Only apply in inter-company case.'
+                examples:
+                  - '0001060Z11'
+              description:
+                type: string
+                description: 'Vendor description for the order.'
+                examples:
+                  - 'ExxonMobil Asia Pacific Pte Ltd'
+          destinationCompany:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Company code that corresponds to the destination plant.'
+                examples:
+                  - '1775'
+              description:
+                type: string
+                description: 'Company description that corresponds to the destination plant.'
+                examples:
+                  - 'ExxonMobil Asia Pac. P L'
+          sourcePlant:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Souce plant code which show the place material will be transfered from.'
+                examples:
+                  - '0Z0B'
+              description:
+                type: string
+                description: 'Description of source plant code.'
+                examples:
+                  - 'SH COGENT_PCI LWH:LUB:1775'
+          destinationPlant:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Destination plant code which show the place material will be transfered to.'
+                examples:
+                  - '0Z7E'
+              description:
+                type: string
+                description: 'Description of destination plant code.'
+                examples:
+                  - 'EMAPPL LOGICAL:INT:1775'
+          productTransferType:
+            type: string
+            description: 'Show the business scenario of this stock transfer order.'
+            examples:
+              - 'intracompany'
+              - 'intercompanyWithinZone'
+              - 'intercompanyCrossZone'
+          incoterms1:
+            type: string
+            description: 'Main definition for Incoterms associated with the stock transfer order.'
+            examples:
+              - 'DDP'
+          incoterms2:
+            type: string
+            description: 'Additional Incoterms information (if applicable).'
+            examples:
+              - 'PRICE INCLUDES FREIGHT'
+          priceCurrency:
+            type: string
+            description: 'ISO document currency in which the net price and unit price in this order are expressed.'
+            examples:
+              - 'SGD'
+          priceExchangeRate:
+            type: number
+            description: 'Rate used by the system in translating figures from a foreign currency into the local currency.'
+            examples:
+              - 1.00001
+          localCurrency:
+            type: string
+            description: 'ISO local currency.'
+            examples:
+              - 'SGD'
+          customer:
+            type: object
+            properties:
+              number:
+                type: string
+                description: 'Customer key without leading zero.'
+                examples:
+                  - '1060Z7E'
+              id:
+                type: string
+                description: 'Unique customer ID in NA,AP or EU system.'
+                examples:
+                  - 'AP-1060Z7E'
+              key:
+                type: string
+                description: 'Customer key at source plant.'
+                examples:
+                  - '0001060Z7E'
+              description:
+                type: string
+                description: 'Description of customer number.'
+                examples:
+                  - 'EMAPPL LOGICAL:INT:1775'
+          salesOrganization:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Sales organization.'
+                examples:
+                  - '1775'
+              description:
+                type: string
+                description: 'sales organization description.'
+                examples:
+                  - 'EM Asia Pac Pte Ltd'
+          distributionChannel:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Distribution channel.'
+                examples:
+                  - '04'
+              description:
+                type: string
+                description: 'Distribution channel description.'
+                examples:
+                  - 'Supply & Refining'
+          modeOfTransport:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Mode of transport code for the transfer order.'
+                examples:
+                  - 'E2'
+              description:
+                type: string
+                description: 'Mode of transport description for the transfer order.'
+                examples:
+                  - 'Rail'
+          items:
+            type: array
+            items:
+              type: object
+              properties:
+                number:
+                  type: string
+                  description: 'Item number within a stock transfer order. We would usually see a different line item for each material to be transferred within an order.'
+                  examples:
+                    - '00010'
+                updateDate:
+                  type: string
+                  description: 'Timestamp for the last update at the line item level.'
+                  examples:
+                    - '2021-11-30T09:00:00Z'
+                documentType:
+                  type: string
+                  description: 'Item Category Code 7 is used for standard stock transfers (Doc Type "UB"). Item Category Code 0 is used to represent an STO(Doc Types "ZEMA" and "ZFIX").'
+                  examples:
+                    - '7'
+                    - '0'
+                storageLocation:
+                  type: string
+                  description: 'Number of the storage location at which the material is stored.'
+                  example: 'LPWH'
+                statusQuantity:
+                  type: object
+                  properties:
+                    openQuantity:
+                      type: number
+                      description: 'Amount of material that is still not planned to transfer from source to destination plant.'
+                      examples:
+                        - 34.001
+                    nonShippedQuantity:
+                      type: number
+                      description: 'Amount of material that has not been shipped from the source plant.'
+                      examples:
+                        - 34.001
+                    inTransitQuantity:
+                      type: number
+                      description: 'Amount of material that has been transfered from source to destination plant.'
+                      examples:
+                        - 0.001
+                    uom:
+                      type: string
+                      description: 'GRDB ISO unit of measure for the quantity fields.'
+                      examples:
+                        - 'EA'
+                profitCenter:
+                  type: object
+                  properties:
+                    number:
+                      type: string
+                      description: 'Profit center key without leading zero.'
+                      examples:
+                        - '705269'
+                    id:
+                      type: string
+                      description: 'Unique profit center ID in NA,AP or EU system.'
+                      examples:
+                        - 'AP-705269'
+                    key:
+                      type: string
+                      description: 'Profit center to which the received material will be assigned on. It represents the business line that will own the inventory at the destination. '
+                      examples:
+                        - 0000705269
+                    description:
+                      type: string
+                      description: 'Profit center description.'
+                      examples:
+                        - '1775 IN Fin Lub Ind. 1775 IN Finished Lu'
+                trackingNumber:
+                  type: string
+                  description: 'Reference Number that is helpful to link documents in scenarios involving multiple transactions for a single stock transfer.'
+                  examples:
+                    - '2101800235'
+                pipeTripNumber:
+                  type: string
+                  description: 'Pipe trip number is where we keep ESN(External Shipment Number) which is a delivery grouping number.Delivery that has the same grouping number will go with the same truck.'
+                  examples:
+                    - '718482/50'
+                nominationKey:
+                  type: string
+                  description: 'Nomination key is specific to basestock.Only applicable for those movement scheduled via GOM system. It used to link different table in GOM. Nomiantion is a document in GOM.'
+                  examples:
+                    - '86806'
+                underdeliveryTolerance:
+                  type: number
+                  description: 'It used for status detail calculation.'
+                  examples:
+                    - 10
+                incoterms1:
+                  type: string
+                  description: 'Main definition for Incoterms associated with the stock transfer order in line item level.'
+                  examples:
+                    - 'DAT'
+                incoterms2:
+                  type: string
+                  description: 'Additional incoterms information (if applicable) in line item level.'
+                  examples:
+                    - '10'
+                sourceMaterial:
+                  type: object
+                  properties:
+                    number:
+                      type: string
+                      description: 'Source plant key without leading zero.'
+                      examples:
+                        - '140142'
+                    id:
+                      type: string
+                      description: 'Unique source material ID in NA,AP or EU system.'
+                      examples:
+                        - 'AP-140142'
+                    key:
+                      type: string
+                      description: 'Material code at the source plant. If the source plant is in a different SAP box (another region), the source and destination codes (for the same real material) will be different.'
+                      examples:
+                        - '000000000000140142'
+                    description:
+                      type: string
+                      description: 'Material code description at the source plant.'
+                      examples:
+                        - 'MOBILGREASE XHP 223 PAIL 16KG:SG'
+                destinationMaterial:
+                  type: object
+                  properties:
+                    number:
+                      type: string
+                      description: 'Destination plant key without leading zero.'
+                      examples:
+                        - '140142'
+                    id:
+                      type: string
+                      description: 'Unique destination material ID in NA,AP or EU system.'
+                      examples:
+                        - 'AP-140142'
+                    key:
+                      type: string
+                      description: 'Material code at the destination plant.'
+                      examples:
+                        - '000000000000140142'
+                    description:
+                      type: string
+                      description: 'Material code description at the destination plant.'
+                      examples:
+                        - 'MOBILGREASE XHP 223 PAIL 16KG:SG'
+                status:
+                  type: object
+                  properties:
+                    statusDetail:
+                      type: string
+                      description: 'Status detail of stock transfer order.'
+                      examples:
+                        - 'openNotDelivered'
+                        - 'markedCompleted'
+                        - 'markedDeleted'
+                        - 'fullyDelivered'
+                        - 'partiallyDelivered'
+                        - 'markedGoodsReceipt'
+                        - 'other'
+                    overallStatus:
+                      type: string
+                      description: 'High level to concluse status detail of stock transfer order.'
+                      examples:
+                        - 'open'
+                        - 'closed'
+                requestedQuantity:
+                  type: object
+                  properties:
+                    amount:
+                      type: number
+                      description: 'The quantity of material is defined to be transferred in the stock transfer order line item level.'
+                      examples:
+                        - 34.001
+                    uom:
+                      type: string
+                      description: 'GRDB ISO unit of measure for the requested quantity.'
+                      examples:
+                        - 'EA'
+                statusIndicator:
+                  type: object
+                  properties:
+                    deletionIndicatorAtDestination:
+                      type: string
+                      description: 'An order from destination marked for deletion does not always mean that the order was cancelled. We could have a scenario where the order was fully or partially delivered and the deletion Indicator is set.'
+                      examples:
+                        - 'L'
+                        - 'S'
+                    completion:
+                      type: string
+                      description: 'When this flag is set it means that the line item was flagged for completion (which does not always mean that is has been fully delivered).'
+                      examples:
+                        - 'X'
+                    goodsReceipt:
+                      type: string
+                      description: 'Good receipt indicator show whether there is GR event related to this stock transfer order.'
+                      examples:
+                        - 'X'
+                sellingPrice:
+                  type: object
+                  properties:
+                    netPrice:
+                      type: number
+                      description: 'Net price at source plant corresponing to the line item quantity being transfered.'
+                      examples:
+                        - 318
+                    unitPrice:
+                      type: number
+                      description: 'Unit price at source plant for the line time material being transferred.'
+                      examples:
+                        - 100
+                    uom:
+                      type: string
+                      description: 'GRDB ISO unit of measure at source plant in which the prices are represented.'
+                      examples:
+                        - 'UG6'
+                purchasingPrice:
+                  type: object
+                  properties:
+                    netPrice:
+                      type: number
+                      description: 'Net price at destination plant corresponing to the line item quantity being transfered.'
+                      examples:
+                        - 318
+                    unitPrice:
+                      type: number
+                      description: 'Unit price at destination plant for the line time material being transferred.'
+                      examples:
+                        - 100
+                    uom:
+                      type: string
+                      description: 'GRDB ISO unit of measure at destination plant in which the prices are represented.'
+                      examples:
+                        - 'UG6'
+                transport:
+                  type: object
+                  properties:
+                    modeOfTransport:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                          description: 'Mode of transport code. There is case that trasport mode in header level and line item level are different.'
+                          examples:
+                            - 'E1'
+                        description:
+                          type: string
+                          description: 'Mode of transport description. '
+                          examples:
+                            - 'road'
+                    shippingPoint:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                          description: 'Shipping point code.'
+                          examples:
+                            - 'AZ0B'
+                        description:
+                          type: string
+                          description: 'Shipping point description.'
+                          examples:
+                            - 'SH COGENT_PCI:LWH:LUB:1775'
+                    route:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                          description: 'Route code.'
+                          examples:
+                            - 'SGLPSG'
+                        description:
+                          type: string
+                          description: 'Route description.'
+                          examples:
+                            - 'SG L&amp;PS Singapore Route'
+                    transportationGroup:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                          description: 'Transportation group code.'
+                          examples:
+                            - 'RPCK'
+                        description:
+                          type: string
+                          description: 'Transportation group description.'
+                          examples:
+                            - 'Region Pack'
+                    loadingGroup:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                          description: 'Loading group code.'
+                          examples:
+                            - 'LU2P'
+                        description:
+                          type: string
+                          description: 'Loading group description.'
+                          examples:
+                            - 'Packed Lubricants 2'
+                    shippingCondition:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                          description: 'Shipping condition code.'
+                          examples:
+                            - '60'
+                        description:
+                          type: string
+                          description: 'Shipping condition description.'
+                          examples:
+                            - 'Road Pickup'
+                    deliveryCreationDate:
+                      type: string
+                      description: 'Delivery creation date.'
+                      examples:
+                        - '2021-11-23T09:00:00Z'
+                    deliveryPriority:
+                      type: string
+                      description: 'Delivery priority.'
+                      examples:
+                        - '02'
+                    deliveryPlannedDay:
+                      type: number
+                      description: 'Planned delivery time  (days).'
+                      examples:
+                        - 7
+                scheduleLine:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      number:
+                        type: string
+                        description: 'Schedule line number corresponding to the order item.'
+                        examples:
+                          - '0001'
+                      quantityUom:
+                        type: string
+                        description: 'GRDB ISO unit of measurement.'
+                        examples:
+                          - 'EA'
+                      requested:
+                        type: object
+                        properties:
+                          quantity:
+                            type: number
+                            description: 'Requested quantity at schedule line item level.'
+                            examples:
+                              - 24
+                          committedDate:
+                            type: string
+                            description: 'Date of material that has been commited from the source plant.'
+                            examples:
+                              - '2021-12-03T09:00:00Z'
+                      delivered:
+                        type: object
+                        properties:
+                          quantity:
+                            type: number
+                            description: 'Quantity delivered and recorded to that specific schedule line.'
+                            examples:
+                              - 10.001
+                          date:
+                            type: string
+                            description: 'Delivery date of material.'
+                            examples:
+                              - '2021-11-30T09:00:00Z'
+                      goodsIssue:
+                        type: object
+                        properties:
+                          quantity:
+                            type: number
+                            description: 'Amount of material that has been issued (GI) from the source plant.'
+                            examples:
+                              - 10.001
+                          date:
+                            type: string
+                            description: 'Date of material that has been issued (GI) from the source plant.'
+                            examples:
+                              - '2021-12-01T09:00:00Z'
+                      goodsReceipt:
+                        type: object
+                        properties:
+                          quantity:
+                            type: number
+                            description: 'Amount of material that has been received (GR) at the destination plant.'
+                            examples:
+                              - 10.001
+                          date:
+                            type: string
+                            description: 'Date of material that has been received (GR) at the destination plant.'
+                            examples:
+                              - '2021-12-03T09:00:00Z'
+        examples:
+          - eventTimeStamp: "2021-12-02T09:01:41Z"
+            eventType: "STO_CREATED"
+            stockTransferOrderNumber: "4900384239"
+            stockTransferOrderId: "AP-4900384239"
+            productTransferId: "AP-4900384239"
+            stockTransferOrderCreationDate: "2021-11-30T09:00:00Z"
+            documentType: "UB"
+            sourceSystemAtDestination: "AP"
+            sourceSystemAtSource: "AP"
+            timeZoneAtSource: "UTC+08:00"
+            timeZoneAtDestination: "UTC+08:00"
+            referenceNumber: "4801131413te"
+            supportingDocuments: null
+            incompleteFlow: null
+            deficientIndicator: null
+            vendor:
+              number : "1060Z11"
+              id : "AP-1060Z11"
+              key : "0001060Z11"
+              description : "ExxonMobil Asia Pacific Pte Ltd"
+            destinationCompany:
+              code : "1775"
+              description : "ExxonMobil Asia Pac. P L"
+            sourcePlant:
+              code: "0Z0B"
+              description: "SH COGENT_PCI LWH:LUB:1775"
+            destinationPlant:
+              code: "0Z7E"
+              description: "EMAPPL LOGICAL:INT:1775"
+            productTransferType: "intracompany"
+            incoterms1: "DDP"
+            incoterms2: "PRICE INCLUDES FREIGHT"
+            priceCurrency: "SGD"
+            priceExchangeRate: 1.00000
+            localCurrency: "SGD"
+            customer:
+              number: "1060Z7E"
+              id: "AP-1060Z7E"
+              key: "0001060Z7E"
+              description: "EMAPPL LOGICAL:INT:1775"
+            salesOrganization:
+              code: "1775"
+              description: "EM Asia Pac Pte Ltd"
+            distributionChannel:
+              code: "04"
+              description: "Supply & Refining"
+            modeOfTransport:
+              code: "E2"
+              description: "Rail"
+            items:
+              - number: '00010'
+                updateDate: '2021-11-30T09:00:00Z'
+                documentType: '0'
+                storageLocation: 'LPWH'
+                statusQuantity:
+                  openQuantity: 34.000
+                  nonShippedQuantity: 34.000
+                  inTransitQuantity: 0.000
+                  uom: 'EA'
+                profitCenter:
+                  number: '705269'
+                  id: 'AP-705269'
+                  key: >
+                    0000705269
+                  description: '1775 IN Fin Lub Ind. 1775 IN Finished Lu'
+                trackingNumber: '2101800235'
+                pipeTripNumber: '718482/50'
+                nominationKey: '86806'
+                underdeliveryTolerance: 10.0
+                incoterms1: DAT
+                incoterms2: '10'
+                sourceMaterial:
+                  number: '140142'
+                  id: 'AP-140142'
+                  key: >
+                    000000000000140142
+                  description: 'MOBILGREASE XHP 223 PAIL 16KG:SG'
+                destinationMaterial:
+                  number: '140142'
+                  id: 'AP-140142'
+                  key: '000000000000140142'
+                  description: 'MOBILGREASE XHP 223 PAIL 16KG:SG'
+                status:
+                  statusDetail: 'openNotDelivered'
+                  overallStatus: 'open'
+                requestedQuantity:
+                  amount: 34.000
+                  uom: "EA"
+                statusIndicator:
+                  deletionIndicatorAtDestination: "S"
+                  completion: "X"
+                  goodsReceipt: "X"
+                sellingPrice:
+                  netPrice: 318
+                  unitPrice: 100
+                  uom: "UG6"
+                purchasingPrice:
+                  netPrice: 318
+                  unitPrice: 100
+                  uom: "UG6"
+                transport:
+                  modeOfTransport:
+                    code: "E1"
+                    description: "road"
+                  shippingPoint:
+                    code: "AZ0B"
+                    description: "SH COGENT_PCI:LWH:LUB:1775"
+                  route:
+                    code: "SGLPSG"
+                    description: "SG L&amp;PS Singapore Route"
+                  transportationGroup:
+                    code: "RPCK"
+                    description: "Region Pack"
+                  loadingGroup:
+                    code: "LU2P"
+                    description: "Packed Lubricants 2"
+                  shippingCondition:
+                    code: "60"
+                    description: "Road Pickup"
+                  deliveryCreationDate : "2021-11-23T09:00:00Z"
+                  deliveryPlannedDay: 7
+                  deliveryPriority: "02"
+                scheduleLine:
+                  - number: '0001'
+                    quantityUom: 'EA'
+                    requested:
+                      quantity: 24
+                      committedDate: '2021-12-03T09:00:00Z'
+                    delivered:
+                      quantity: 10.000
+                      date: '2021-11-30T09:00:00Z'
+                    goodsIssue:
+                      quantity: 10.000
+                      date: '2021-12-01T09:00:00Z'
+                    goodsReceipt:
+                      quantity: 10.000
+                      date: '2021-12-03T09:00:00Z'
+          - eventTimeStamp: "2021-12-02T09:01:41Z"
+            eventType: "STO_CREATED"
+            stockTransferOrderNumber: "4900384239"
+            stockTransferOrderId: "AP-4900384239"
+            productTransferId: "AP-4900384239"
+            stockTransferOrderCreationDate: "2021-11-30T09:00:00Z"
+            documentType: "UB"
+            sourceSystemAtDestination: "AP"
+            sourceSystemAtSource: "AP"
+            timeZoneAtSource: "UTC+08:00"
+            timeZoneAtDestination: "UTC+08:00"
+            referenceNumber: "4801131413te"
+            supportingDocuments: [ "AP-4900434565","AP-4900434565","","","","","AP-4900384239","AP-4900384239" ]
+            incompleteFlow: "Y"
+            deficientIndicator: "No Document Position"
+            vendor:
+              number: "1060Z11"
+              id: "AP-1060Z11"
+              key: "0001060Z11"
+              description: "ExxonMobil Asia Pacific Pte Ltd"
+            destinationCompany:
+              code: "1775"
+              description: "ExxonMobil Asia Pac. P L"
+            sourcePlant:
+              code: "0Z0B"
+              description: "SH COGENT_PCI LWH:LUB:1775"
+            destinationPlant:
+              code: "0Z7E"
+              description: "EMAPPL LOGICAL:INT:1775"
+            productTransferType: "intercompanyWithinZone"
+            incoterms1: "DDP"
+            incoterms2: "PRICE INCLUDES FREIGHT"
+            priceCurrency: "SGD"
+            priceExchangeRate: 1.00000
+            localCurrency: "SGD"
+            customer:
+              number: "1060Z7E"
+              id: "AP-1060Z7E"
+              key: "0001060Z7E"
+              description: "EMAPPL LOGICAL:INT:1775"
+            salesOrganization:
+              code: "1775"
+              description: "EM Asia Pac Pte Ltd"
+            distributionChannel:
+              code: "04"
+              description: "Supply & Refining"
+            modeOfTransport:
+              code: "E2"
+              description: "Rail"
+            items:
+              - number: '00010'
+                updateDate: '2021-11-30T09:00:00Z'
+                documentType: '0'
+                storageLocation: 'LPWH'
+                statusQuantity:
+                  openQuantity: 34.000
+                  nonShippedQuantity: 34.000
+                  inTransitQuantity: 0.000
+                  uom: 'EA'
+                profitCenter:
+                  number: "705269"
+                  id: "AP-705269"
+                  key: >
+                    0000705269
+                  description: '1775 IN Fin Lub Ind. 1775 IN Finished Lu'
+                trackingNumber: '2101800235'
+                pipeTripNumber: '718482/50'
+                nominationKey: '86806'
+                underdeliveryTolerance: 10.0
+                incoterms1: DAT
+                incoterms2: '10'
+                sourceMaterial:
+                  number: '140142'
+                  id: 'AP-140142'
+                  key: >
+                    000000000000140142
+                  description: 'MOBILGREASE XHP 223 PAIL 16KG:SG'
+                destinationMaterial:
+                  number: '140142'
+                  id: 'AP-140142'
+                  key: '000000000000140142'
+                  description: 'MOBILGREASE XHP 223 PAIL 16KG:SG'
+                status:
+                  statusDetail: 'openNotDelivered'
+                  overallStatus: 'open'
+                requestedQuantity:
+                  amount: 34.000
+                  uom: "EA"
+                statusIndicator:
+                  deletionIndicatorAtDestination: "S"
+                  completion: "X"
+                  goodsReceipt: "X"
+                sellingPrice:
+                  netPrice: 318
+                  unitPrice: 100
+                  uom: "UG6"
+                purchasingPrice:
+                  netPrice: 318
+                  unitPrice: 100
+                  uom: "UG6"
+                transport:
+                  modeOfTransport:
+                    code: "E1"
+                    description: "road"
+                  shippingPoint:
+                    code: "AZ0B"
+                    description: "SH COGENT_PCI:LWH:LUB:1775"
+                  route:
+                    code: "SGLPSG"
+                    description: "SG L&amp;PS Singapore Route"
+                  transportationGroup:
+                    code: "RPCK"
+                    description: "Region Pack"
+                  loadingGroup:
+                    code: "LU2P"
+                    description: "Packed Lubricants 2"
+                  shippingCondition:
+                    code: "60"
+                    description: "Road Pickup"
+                  deliveryCreationDate: "2021-11-23T09:00:00Z"
+                  deliveryPlannedDay: 7
+                  deliveryPriority: "02"
+                scheduleLine:
+                  - number: '0001'
+                    quantityUom: 'EA'
+                    requested:
+                      quantity: 24
+                      committedDate: '2021-12-03T09:00:00Z'
+                    delivered:
+                      quantity: 10.000
+                      date: '2021-11-30T09:00:00Z'
+                    goodsIssue:
+                      quantity: 10.000
+                      date: '2021-12-01T09:00:00Z'
+                    goodsReceipt:
+                      quantity: 10.000
+                      date: '2021-12-03T09:00:00Z'
+          - eventTimeStamp: "2021-12-02T09:01:41Z"
+            eventType: "STO_CREATED"
+            stockTransferOrderNumber: "4900384239"
+            stockTransferOrderId: "AP-4900384239"
+            productTransferId: "AP-4900384239"
+            stockTransferOrderCreationDate: "2021-11-30T09:00:00Z"
+            documentType: "UB"
+            sourceSystemAtDestination: "AP"
+            sourceSystemAtSource: "EU"
+            timeZoneAtSource: "UTC+02:00"
+            timeZoneAtDestination: "UTC+08:00"
+            referenceNumber: "4801131413te"
+            supportingDocuments: [ "EU-4900434565","EU-4900434565","","","","","AP-4900384239","AP-4900384239" ]
+            incompleteFlow: "Y"
+            deficientIndicator: "No Document Position"
+            vendor:
+              number: "1060Z11"
+              id: "AP-1060Z11"
+              key: "0001060Z11"
+              description: "ExxonMobil Asia Pacific Pte Ltd"
+            destinationCompany:
+              code: "1775"
+              description: "ExxonMobil Asia Pac. P L"
+            sourcePlant:
+              code: "0Z0B"
+              description: "SH COGENT_PCI LWH:LUB:1775"
+            destinationPlant:
+              code: "0Z7E"
+              description: "EMAPPL LOGICAL:INT:1775"
+            productTransferType: "intercompanyCrossZone"
+            incoterms1: "DDP"
+            incoterms2: "PRICE INCLUDES FREIGHT"
+            priceCurrency: "SGD"
+            priceExchangeRate: 1.00000
+            localCurrency: "SGD"
+            customer:
+              number: "1060Z7E"
+              id: "AP-1060Z7E"
+              key: "0001060Z7E"
+              description: "EMAPPL LOGICAL:INT:1775"
+            salesOrganization:
+              code: "1775"
+              description: "EM Asia Pac Pte Ltd"
+            distributionChannel:
+              code: "04"
+              description: "Supply & Refining"
+            modeOfTransport:
+              code: "E2"
+              description: "Rail"
+            items:
+              - number: '00010'
+                updateDate: '2021-11-30T09:00:00Z'
+                documentType: '0'
+                storageLocation: 'LPWH'
+                statusQuantity:
+                  openQuantity: 34.000
+                  nonShippedQuantity: 34.000
+                  inTransitQuantity: 0.000
+                  uom: 'EA'
+                profitCenter:
+                  number: "705269"
+                  id: "AP-705269"
+                  key: >
+                    0000705269
+                  description: '1775 IN Fin Lub Ind. 1775 IN Finished Lu'
+                trackingNumber: '2101800235'
+                pipeTripNumber: '718482/50'
+                nominationKey: '86806'
+                underdeliveryTolerance: 10.0
+                incoterms1: DAT
+                incoterms2: '10'
+                sourceMaterial:
+                  number: '151187'
+                  id: 'EU-151187'
+                  key: >
+                    000000000000151187
+                  description: 'M-SUP2000 X1 10W40 4X5L EU-SW'
+                destinationMaterial:
+                  number: '140142'
+                  id: 'AP-140142'
+                  key: '000000000000140142'
+                  description: 'MOBILGREASE XHP 223 PAIL 16KG:SG'
+                status:
+                  statusDetail: 'openNotDelivered'
+                  overallStatus: 'open'
+                requestedQuantity:
+                  amount: 34.000
+                  uom: "EA"
+                statusIndicator:
+                  deletionIndicatorAtDestination: "S"
+                  completion: "X"
+                  goodsReceipt: "X"
+                sellingPrice:
+                  netPrice: 318
+                  unitPrice: 100
+                  uom: "UG6"
+                purchasingPrice:
+                  netPrice: 318
+                  unitPrice: 100
+                  uom: "UG6"
+                transport:
+                  modeOfTransport:
+                    code: "E1"
+                    description: "road"
+                  shippingPoint:
+                    code: "AZ0B"
+                    description: "SH COGENT_PCI:LWH:LUB:1775"
+                  route:
+                    code: "IT03IT"
+                    description: "IT B/P Italy 72hrs Del"
+                  transportationGroup:
+                    code: "RPCK"
+                    description: "Region Pack"
+                  loadingGroup:
+                    code: "LU2P"
+                    description: "Packed Lubricants 2"
+                  shippingCondition:
+                    code: "60"
+                    description: "Road Pickup"
+                  deliveryCreationDate: "2021-11-23T09:00:00Z"
+                  deliveryPlannedDay: 7
+                  deliveryPriority: "02"
+                scheduleLine:
+                  - number: '0001'
+                    quantityUom: 'EA'
+                    requested:
+                      quantity: 24
+                      committedDate: '2021-12-03T09:00:00Z'
+                    delivered:
+                      quantity: 10.000
+                      date: '2021-11-30T09:00:00Z'
+                    goodsIssue:
+                      quantity: 10.000
+                      date: '2021-12-01T09:00:00Z'
+                    goodsReceipt:
+                      quantity: 10.000
+                      date: '2021-12-03T09:00:00Z'
+    StockTransferOrderUpdated:
+      summary: Stock Transfer Order updated event data
+      tags:
+        - name: PTDS
+        - name: STO
+      payload:
+        type: object
+        properties:
+          eventTimestamp:
+            type: string
+            description: 'Date and time in UTC format when event is created/updated.'
+            examples:
+              - '2021-12-02T09:01:41Z'
+          eventType:
+            type: string
+            description: 'Stock transfer order event type.'
+            examples:
+              - 'STO_UPDATED'
+          productTransferId:
+            type: string
+            description: 'In the same transfer flow, the product transfer ID in all documents(STO/DL/GI/GR) are the same.In intra-company, product transfer ID is intra-STO ID. In inter-company, product transfer ID is last STO/PO ID.'
+            examples:
+              - 'AP-4900384239'
+          stockTransferOrderNumber:
+            type: string
+            description: 'Purchasing order number created by the receiving plant.'
+            examples:
+              - '4900384239'
+          stockTransferOrderId:
+            type: string
+            description: 'Purchase order ID is unique identifier among different stripe system(EU,AP,NA).'
+            examples:
+              - 'AP-4900384239'
+          stockTransferOrderCreationDate:
+            type: string
+            decription: 'Date and time in which the stock transfer order was original created.'
+            examples:
+              - '2021-11-30T09:00:00Z'
+          documentType:
+            type: string
+            description: 'Code for document type in ZEMA(EMPASS supply PO) and UB (stock transfer order) only.'
+            examples:
+              - 'UB'
+              - 'ZEMA'
+              - 'ZFIX'
+              - 'ZEML'
+          sourceSystemAtDestination:
+            type: string
+            description: 'Source system defines the source SAP instance from which the stock transfer order was created from (destination plant).'
+            examples:
+              - 'AP'
+              - 'EU'
+              - 'NA'
+          sourceSystemAtSource:
+            type: string
+            description: 'Source system defines the source SAP instance from which the stock transfer order was created from (source plant).'
+            examples:
+              - 'AP'
+              - 'EU'
+              - 'NA'
+          timeZoneAtSource:
+            type: string
+            description: 'Source system time zone can be used for converting date fields to UTC format or local date.'
+            examples:
+              - 'UTC+08:00'
+          timeZoneAtDestination:
+            type: string
+            description: 'Destination system time zone can be used for converting date fields to UTC format or local date.'
+            examples:
+              - 'UTC+08:00'
+          referenceNumber:
+            type: string
+            description: 'This identifier is relevant when the order is part of a multi-step transfer and this reference is useful to link the documents associated with the same transfer.'
+            examples:
+              - '4801131413te'
+          supportingDocuments:
+            type: array
+            description: 'Only in inter-company within zone and cross zone case. Collect and order all the selling and purchase document ID of the same transaction in this field.'
+            examples: ["","","","","","","","AP-4900384239"]
+          incompleteFlow:
+            type: ["null", string]
+            description: 'Only in inter-company within zone and cross zone case. If there is 3rd party on the transaction, this field will show Y.'
+            examples:
+              - 'Y'
+          deficientIndicator:
+            type: ["null", string]
+            description: 'If cannot calculate product transfer type or document position, this field will show deficient reason.'
+            examples:
+              - 'No Document Position'
+              - 'No Product Transfer Type'
+          vendor:
+            type: object
+            properties:
+              number:
+                type: string
+                description: 'Vendor key without leading zero.'
+                examples:
+                  - '1060Z11'
+              id:
+                type: string
+                description: 'Unique vendor ID in NA,AP or EU system.'
+                examples:
+                  - 'AP-1060Z11'
+              key:
+                type: string
+                description: 'Vendor key for the order. This field is used in this scenarios where logical plant purchases from a 3rd party, and we then transfer the material through an STO. The Vendor here should be the 3rd party. Only apply in inter-company case.'
+                examples:
+                  - '0001060Z11'
+              description:
+                type: string
+                description: 'Vendor description for the order.'
+                examples:
+                  - 'ExxonMobil Asia Pacific Pte Ltd'
+          destinationCompany:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Company code that corresponds to the destination plant.'
+                examples:
+                  - '1775'
+              description:
+                type: string
+                description: 'Company description that corresponds to the destination plant.'
+                examples:
+                  - 'ExxonMobil Asia Pac. P L'
+          sourcePlant:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Souce plant code which show the place material will be transfered from.'
+                examples:
+                  - '0Z0B'
+              description:
+                type: string
+                description: 'Description of source plant code.'
+                examples:
+                  - 'SH COGENT_PCI LWH:LUB:1775'
+          destinationPlant:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Destination plant code which show the place material will be transfered to.'
+                examples:
+                  - '0Z7E'
+              description:
+                type: string
+                description: 'Description of destination plant code.'
+                examples:
+                  - 'EMAPPL LOGICAL:INT:1775'
+          productTransferType:
+            type: string
+            description: 'Show the business scenario of this stock transfer order.'
+            examples:
+              - 'intracompany'
+              - 'intercompanyWithinZone'
+              - 'intercompanyCrossZone'
+          incoterms1:
+            type: string
+            description: 'Main definition for Incoterms associated with the stock transfer order.'
+            examples:
+              - 'DDP'
+          incoterms2:
+            type: string
+            description: 'Additional Incoterms information (if applicable).'
+            examples:
+              - 'PRICE INCLUDES FREIGHT'
+          priceCurrency:
+            type: string
+            description: 'ISO document currency in which the net price and unit price in this order are expressed.'
+            examples:
+              - 'SGD'
+          priceExchangeRate:
+            type: number
+            description: 'Rate used by the system in translating figures from a foreign currency into the local currency.'
+            examples:
+              - 1.00001
+          localCurrency:
+            type: string
+            description: 'ISO local currency.'
+            examples:
+              - 'SGD'
+          customer:
+            type: object
+            properties:
+              number:
+                type: string
+                description: 'Customer key without leading zero.'
+                examples:
+                  - '1060Z7E'
+              id:
+                type: string
+                description: 'Unique customer ID in NA,AP or EU system.'
+                examples:
+                  - 'AP-1060Z7E'
+              key:
+                type: string
+                description: 'Customer key at source plant.'
+                examples:
+                  - '0001060Z7E'
+              description:
+                type: string
+                description: 'Description of customer number.'
+                examples:
+                  - 'EMAPPL LOGICAL:INT:1775'
+          salesOrganization:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Sales organization.'
+                examples:
+                  - '1775'
+              description:
+                type: string
+                description: 'Sales organization description.'
+                examples:
+                  - 'EM Asia Pac Pte Ltd'
+          distributionChannel:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Distribution channel.'
+                examples:
+                  - '04'
+              description:
+                type: string
+                description: 'Distribution channel description.'
+                examples:
+                  - 'Supply & Refining'
+          modeOfTransport:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Mode of transport code for the transfer order.'
+                examples:
+                  - 'E2'
+              description:
+                type: string
+                description: 'Mode of transport description for the transfer order.'
+                examples:
+                  - 'Rail'
+          items:
+            type: array
+            items:
+              type: object
+              properties:
+                number:
+                  type: string
+                  description: 'Item number within a stock transfer order. We would usually see a different line item for each material to be transferred within an order.'
+                  examples:
+                    - '00010'
+                updateDate:
+                  type: string
+                  description: 'Timestamp for the last update at the line item level.'
+                  examples:
+                    - '2021-11-30T09:00:00Z'
+                documentType:
+                  type: string
+                  description: 'Item Category Code 7 is used for standard stock transfers (Doc Type "UB"). Item Category Code 0 is used to represent an STO(Doc Types "ZEMA" and "ZFIX").'
+                  examples:
+                    - '7'
+                    - '0'
+                storageLocation:
+                  type: string
+                  description: 'Number of the storage location at which the material is stored.'
+                  example: 'LPWH'
+                statusQuantity:
+                  type: object
+                  properties:
+                    openQuantity:
+                      type: number
+                      description: 'Amount of material that is still not planned to transfer from source to destination plant.'
+                      examples:
+                        - 34.001
+                    nonShippedQuantity:
+                      type: number
+                      description: 'Amount of material that has not been shipped from the source plant.'
+                      examples:
+                        - 34.001
+                    inTransitQuantity:
+                      type: number
+                      description: 'Amount of material that has been transfered from source to destination plant.'
+                      examples:
+                        - 0.001
+                    uom:
+                      type: string
+                      description: 'GRDB ISO unit of measure for the quantity fields.'
+                      examples:
+                        - 'EA'
+                profitCenter:
+                  type: object
+                  properties:
+                    number:
+                      type: string
+                      description: 'Profit center key without leading zero.'
+                      examples:
+                        - "705269"
+                    id:
+                      type: string
+                      description: 'Unique profit center ID in NA,AP or EU system.'
+                      examples:
+                        - "AP-705269"
+                    key:
+                      type: string
+                      description: 'Profit center to which the received material will be assigned on. It represents the business line that will own the inventory at the destination. '
+                      examples:
+                        - '0000705269'
+                    description:
+                      type: string
+                      description: 'Profit center description.'
+                      examples:
+                        - '1775 IN Fin Lub Ind. 1775 IN Finished Lu'
+                trackingNumber:
+                  type: string
+                  description: 'Reference Number that is helpful to link documents in scenarios involving multiple transactions for a single stock transfer.'
+                  examples:
+                    - '2101800235'
+                pipeTripNumber:
+                  type: string
+                  description: 'Pipe trip number is where we keep ESN(External Shipment Number) which is a delivery grouping number.Delivery that has the same grouping number will go with the same truck.'
+                  examples:
+                    - '718482/50'
+                nominationKey:
+                  type: string
+                  description: 'Nomination key is specific to basestock.Only applicable for those movement scheduled via GOM system. It used to link different table in GOM. Nomiantion is a document in GOM.'
+                  examples:
+                    - '86806'
+                underdeliveryTolerance:
+                  type: number
+                  description: 'It used for status detail calculation.'
+                  examples:
+                    - 10
+                incoterms1:
+                  type: string
+                  description: 'Main definition for Incoterms associated with the stock transfer order in line item level.'
+                  examples:
+                    - 'DAT'
+                incoterms2:
+                  type: string
+                  description: 'Additional incoterms information (if applicable) in line item level.'
+                  examples:
+                    - '10'
+                sourceMaterial:
+                  type: object
+                  properties:
+                    number:
+                      type: string
+                      description: 'Source plant key without leading zero.'
+                      examples:
+                        - '140142'
+                    id:
+                      type: string
+                      description: 'Unique source material ID in NA,AP or EU system.'
+                      examples:
+                        - 'AP-140142'
+                    key:
+                      type: string
+                      description: 'Material code at the source plant. If the source plant is in a different SAP box (another region), the source and destination codes (for the same real material) will be different.'
+                      examples:
+                        - '000000000000140142'
+                    description:
+                      type: string
+                      description: 'Material code description at the source plant.'
+                      examples:
+                        - 'MOBILGREASE XHP 223 PAIL 16KG:SG'
+                destinationMaterial:
+                  type: object
+                  properties:
+                    number:
+                      type: string
+                      description: 'Destination plant key without leading zero.'
+                      examples:
+                        - '140142'
+                    id:
+                      type: string
+                      description: 'Unique destination material ID in NA,AP or EU system.'
+                      examples:
+                        - 'AP-140142'
+                    key:
+                      type: string
+                      description: 'Material code at the destination plant.'
+                      examples:
+                        - '000000000000140142'
+                    description:
+                      type: string
+                      description: 'Material code description at the destination plant.'
+                      examples:
+                        - 'MOBILGREASE XHP 223 PAIL 16KG:SG'
+                status:
+                  type: object
+                  properties:
+                    statusDetail:
+                      type: string
+                      description: 'Status detail of stock transfer order.'
+                      examples:
+                        - 'openNotDelivered'
+                        - 'markedCompleted'
+                        - 'markedDeleted'
+                        - 'fullyDelivered'
+                        - 'partiallyDelivered'
+                        - 'markedGoodsReceipt'
+                        - 'other'
+                    overallStatus:
+                      type: string
+                      description: 'High level to concluse status detail of stock transfer order.'
+                      examples:
+                        - 'open'
+                        - 'closed'
+                requestedQuantity:
+                  type: object
+                  properties:
+                    amount:
+                      type: number
+                      description: 'The quantity of material is defined to be transferred in the stock transfer order line item level.'
+                      examples:
+                        - 34.001
+                    uom:
+                      type: string
+                      description: 'GRDB ISO unit of measure for the requested quantity.'
+                      examples:
+                        - 'EA'
+                statusIndicator:
+                  type: object
+                  properties:
+                    deletionIndicatorAtDestination:
+                      type: string
+                      description: 'An order from destination marked for deletion does not always mean that the order was cancelled. We could have a scenario where the order was fully or partially delivered and the deletion Indicator is set.'
+                      examples:
+                        - 'L'
+                        - 'S'
+                    completion:
+                      type: string
+                      description: 'When this flag is set it means that the line item was flagged for completion (which does not always mean that is has been fully delivered).'
+                      examples:
+                        - 'X'
+                    goodsReceipt:
+                      type: string
+                      description: 'Good receipt indicator show whether there is GR event related to this stock transfer order.'
+                      examples:
+                        - 'X'
+                sellingPrice:
+                  type: object
+                  properties:
+                    netPrice:
+                      type: number
+                      description: 'Net price at source plant corresponing to the line item quantity being transfered.'
+                      examples:
+                        - 318
+                    unitPrice:
+                      type: number
+                      description: 'Unit price at source plant for the line time material being transferred.'
+                      examples:
+                        - 100
+                    uom:
+                      type: string
+                      description: 'GRDB ISO unit of measure at source plant in which the prices are represented.'
+                      examples:
+                        - 'UG6'
+                purchasingPrice:
+                  type: object
+                  properties:
+                    netPrice:
+                      type: number
+                      description: 'Net price at destination plant corresponing to the line item quantity being transfered.'
+                      examples:
+                        - 318
+                    unitPrice:
+                      type: number
+                      description: 'Unit price at destination plant for the line time material being transferred.'
+                      examples:
+                        - 100
+                    uom:
+                      type: string
+                      description: 'GRDB ISO unit of measure at destination plant in which the prices are represented.'
+                      examples:
+                        - 'UG6'
+                transport:
+                  type: object
+                  properties:
+                    modeOfTransport:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                          description: 'Mode of transport code. There is case that trasport mode in header level and line item level are different.'
+                          examples:
+                            - 'E1'
+                        description:
+                          type: string
+                          description: 'Mode of transport description. '
+                          examples:
+                            - 'road'
+                    shippingPoint:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                          description: 'Shipping point code.'
+                          examples:
+                            - 'AZ0B'
+                        description:
+                          type: string
+                          description: 'Shipping point description.'
+                          examples:
+                            - 'SH COGENT_PCI:LWH:LUB:1775'
+                    route:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                          description: 'Route code.'
+                          examples:
+                            - 'SGLPSG'
+                        description:
+                          type: string
+                          description: 'Route description.'
+                          examples:
+                            - 'SG L&amp;PS Singapore Route'
+                    transportationGroup:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                          description: 'Transportation group code.'
+                          examples:
+                            - 'RPCK'
+                        description:
+                          type: string
+                          description: 'Transportation group description.'
+                          examples:
+                            - 'Region Pack'
+                    loadingGroup:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                          description: 'Loading group code.'
+                          examples:
+                            - 'LU2P'
+                        description:
+                          type: string
+                          description: 'Loading group description.'
+                          examples:
+                            - 'Packed Lubricants 2'
+                    shippingCondition:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                          description: 'Shipping condition code.'
+                          examples:
+                            - '60'
+                        description:
+                          type: string
+                          description: 'Shipping condition description.'
+                          examples:
+                            - 'Road Pickup'
+                    deliveryCreationDate:
+                      type: string
+                      description: 'Delivery creation date.'
+                      examples:
+                        - '2021-11-23T09:00:00Z'
+                    deliveryPriority:
+                      type: string
+                      description: 'Delivery priority.'
+                      examples:
+                        - '02'
+                    deliveryPlannedDay:
+                      type: number
+                      description: 'Planned delivery time  (days).'
+                      examples:
+                        - 7
+                scheduleLine:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      number:
+                        type: string
+                        description: 'Schedule line number corresponding to the order item.'
+                        examples:
+                          - '0001'
+                      quantityUom:
+                        type: string
+                        description: 'GRDB ISO unit of measurement.'
+                        examples:
+                          - 'EA'
+                      requested:
+                        type: object
+                        properties:
+                          quantity:
+                            type: number
+                            description: 'Requested quantity at schedule line item level.'
+                            examples:
+                              - 24
+                          committedDate:
+                            type: string
+                            description: 'Date of material that has been commited from the source plant.'
+                            examples:
+                              - '2021-12-03T09:00:00Z'
+                      delivered:
+                        type: object
+                        properties:
+                          quantity:
+                            type: number
+                            description: 'Quantity delivered and recorded to that specific schedule line.'
+                            examples:
+                              - 10.001
+                          date:
+                            type: string
+                            description: 'Delivery date of material.'
+                            examples:
+                              - '2021-11-30T09:00:00Z'
+                      goodsIssue:
+                        type: object
+                        properties:
+                          quantity:
+                            type: number
+                            description: 'Amount of material that has been issued (GI) from the source plant.'
+                            examples:
+                              - 10.001
+                          date:
+                            type: string
+                            description: 'Date of material that has been issued (GI) from the source plant.'
+                            examples:
+                              - '2021-12-01T09:00:00Z'
+                      goodsReceipt:
+                        type: object
+                        properties:
+                          quantity:
+                            type: number
+                            description: 'Amount of material that has been received (GR) at the destination plant.'
+                            examples:
+                              - 10.001
+                          date:
+                            type: string
+                            description: 'Date of material that has been received (GR) at the destination plant.'
+                            examples:
+                              - '2021-12-03T09:00:00Z'
+    DeliveryCreated:
+      summary: Delivery created event data
+      tags:
+        - name: PTDS
+        - name: DL
+      payload:
+        type: object
+        properties:
+          eventTimestamp:
+            type: string
+            description: 'Date and time in UTC format when event is created/updated.'
+            examples:
+              - '2021-03-17T15:29:18Z'
+          eventType:
+            type: string
+            description: 'Delivery event type from DDS'
+            examples:
+              - 'DELIVERY_CREATED'
+          productTransferId:
+            type: string
+            description: 'In the same transfer flow, the product transfer ID in all documents(STO/DL/GI/GR) are the same.In intra-company, product transfer ID is intra-STO ID. In inter-company, product transfer id is last STO/PO ID in the same transfer flow.'
+            examples:
+              - 'AP-2312345678'
+          sourceSystem:
+            type: string
+            description: 'The source system delivery in'
+            examples:
+              - 'AP'
+          systemTimeZone:
+            type: string
+            description: 'System time zone can be used for converting date fields to UTC format or local date.'
+            examples:
+              - 'UTC+08:00'
+          deletionIndicator:
+            type: string
+            description: 'Delivery deletion indicator'
+            examples:
+              - 'delete'
+          deliveryNumber:
+            type: string
+            description: 'Delivery document number'
+            examples:
+              - '8019935494'
+          deliveryId:
+            type: string
+            description: 'Unique delivery number in different stripe system'
+            examples:
+              - 'AP-8019935494'
+          deliveryDocumentCreationDate:
+            type: string
+            description: 'Creation date for the delivery document'
+            examples:
+              - '2021-10-19T14:13:52Z'
+          externalShipmentNumber:
+            type: string
+            description: 'External shipment number.'
+            examples:
+              - '123455'
+          incoterms1:
+            type: string
+            description: 'Incoterms code (part 1) at delivery header level'
+            examples:
+              - 'DAT'
+          incoterms2:
+            type: string
+            description: 'Incoterms code (part 2) at delivery header level, if applicable'
+            examples:
+              - 'TEXT'
+          deliveryType:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Delivery type.'
+                examples:
+                  - 'ZNL'
+                  - 'ZLF'
+                  - 'ZLCC'
+              description:
+                type: string
+                description: 'Delivery type description.'
+                examples:
+                  - 'Delivery'
+          shippingCondition:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'shipping condition'
+                examples:
+                  - '02'
+              description:
+                type: string
+                description: 'shipping condition description'
+                examples:
+                  - 'Road Del Unmtr/Pkg'
+          shippingPoint:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'shipping point'
+                examples:
+                  - '0UA1'
+              description:
+                type: string
+                description: 'shipping point description'
+                examples:
+                  - 'EXPRESS RW (FRD):LUB:0UA1'
+          route:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Route code.'
+                examples:
+                  - 'IN0000'
+              description:
+                type: string
+                description: 'Route description.'
+                examples:
+                  - 'IN General'
+          deliveryPriority:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Delivery priority code.'
+                examples:
+                  - '3'
+              description:
+                type: string
+                description: 'Delivery priority description.'
+                examples:
+                  - 'Group C'
+          salesOrganization:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Sales organization.'
+                examples:
+                  - '7020'
+              description:
+                type: string
+                description: 'Sales organization description.'
+                examples:
+                  - 'EXXONMOBIL LUBRICANTS PRIVATE LIMITED'
+          modeOfTransportation:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Mode of transportation code.'
+                examples:
+                  - 'E1'
+              description:
+                type: string
+                description: 'Mode of Transportation description.'
+                examples:
+                  - 'Road'
+          date:
+            type: object
+            properties:
+              plannedGoodsMovementDate:
+                type: string
+                description: 'Date in which the movement of goods is planned'
+                examples:
+                  - '2021-10-19T16:00:00Z'
+              actualDeliveryDate:
+                type: string
+                description: 'Actual delivery date.'
+                examples:
+                  - '2021-10-19T16:00:00Z'
+              plannedDeliveryDate:
+                type: string
+                description: 'Planned delivery date.'
+                examples:
+                  - '2021-10-19T16:00:00Z'
+              loadingDate:
+                type: string
+                description: 'Loading date.'
+                examples:
+                  - '2021-10-18T16:00:00Z'
+          items:
+            type: array
+            items:
+              type: object
+              properties:
+                number:
+                  type: string
+                  description: 'Delivery line item number.'
+                  examples:
+                    - '000010'
+                materialAvailabilityDate:
+                  type: string
+                  description: 'Material availability date.'
+                  examples:
+                    - '2021-10-18T16:00:00Z'
+                referenceDocumentNumber:
+                  type: string
+                  description: 'Document number (STO/SO) linked to delivery document.'
+                  examples:
+                    - '2312345678'
+                referenceDocumentItemNumber:
+                  type: string
+                  description: 'Corresponding STO/SO line item.'
+                  examples:
+                    - '10'
+                plantCode:
+                  type: string
+                  description: 'Plant code.'
+                  example: '0JH0'
+                material:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: 'Material unique ID.'
+                      example: 'na-101576'
+                    code:
+                      type: string
+                      description: 'Material code.'
+                      example: '101576'
+                documentCategory:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Document category: C (Order), H (Returns), I (Order w/o charge)'
+                      examples:
+                        - 'C'
+                    description:
+                      type: string
+                      description: 'Document category description'
+                      examples:
+                        - 'Order'
+                distributionChannel:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Distribution channel.'
+                      examples:
+                        - '03'
+                    description:
+                      type: string
+                      description: 'Distribution channel description'
+                      examples:
+                        - 'Non-Retail'
+                division:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Division.'
+                      examples:
+                        - '04'
+                    description:
+                      type: string
+                      description: 'Division description.'
+                      examples:
+                        - 'Lubes'
+                itemCategory:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Item category code.'
+                      examples:
+                        - 'ZPCK'
+                    description:
+                      type: string
+                      description: 'Item category description.'
+                      examples:
+                        - 'Standard packed item'
+                movementType:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Movement type code as defined by SAP.'
+                      examples:
+                        - '601'
+                    description:
+                      type: string
+                      description: 'Movement type description.'
+                      examples:
+                        - 'GD goods issue:delivery'
+                deliveryQuantity:
+                  type: object
+                  properties:
+                    amount:
+                      type: number
+                      description: 'Actual Delivery Quantity in sales units'
+                      examples:
+                          - 100
+                    uom:
+                      type: string
+                      description: 'GRDB ISO unit of measure for the actual delivery quantity.'
+                      examples:
+                          - 'EA'
+                deliveryQuantityBase:
+                  type: object
+                  properties:
+                    amount:
+                      type: number
+                      description: 'Actual Delivery Quantity in stock keeping units'
+                      examples:
+                          - 100
+                    uom:
+                      type: string
+                      description: 'GRDB ISO unit of measure for the actual delivery quantity.'
+                      examples:
+                        - 'EA'
+                additionalActualDeliveryQuantity:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      amount:
+                        type: number
+                        description: 'Additional Actual Delivery Quantity'
+                        examples:
+                          - 100
+                      uom:
+                        type: string
+                        description: 'GRDB ISO unit of measure for the additional actual delivery quantity.'
+                        examples:
+                          - 'EA'
+    DeliveryUpdated:
+      summary: Delivery updated event data
+      tags:
+        - name: PTDS
+        - name: DL
+      payload:
+        type: object
+        properties:
+          eventTimestamp:
+            type: string
+            description: 'Date and time in UTC format when event is created/updated.'
+            examples:
+              - '2021-03-17T15:29:18Z'
+          eventType:
+            type: string
+            description: 'Delivery event type from DDS.'
+            examples:
+              - 'DELIVERY_UPDATED'
+          productTransferId:
+            type: string
+            description: 'In the same transfer flow, the product transfer ID in all documents(STO/DL/GI/GR) are the same.In intra-company, product transfer ID is intra-STO ID. In inter-company, product transfer id is last STO/PO ID in the same transfer flow.'
+            examples:
+              - 'AP-2312345678'
+          sourceSystem:
+            type: string
+            description: 'The source system delivery in.'
+            examples:
+              - 'AP'
+          systemTimeZone:
+            type: string
+            description: 'System time zone can be used for converting date fields to UTC format or local date.'
+            examples:
+              - 'UTC+08:00'
+          deletionIndicator:
+            type: string
+            description: 'Delivery deletion indicator.'
+            examples:
+              - 'delete'
+          deliveryNumber:
+            type: string
+            description: 'Delivery document number.'
+            examples:
+              - '8019935494'
+          deliveryId:
+            type: string
+            description: 'Unique delivery number in different stripe system.'
+            examples:
+              - 'AP-8019935494'
+          deliveryDocumentCreationDate:
+            type: string
+            description: 'Creation date for the delivery document.'
+            examples:
+              - '2021-10-19T14:13:52Z'
+          externalShipmentNumber:
+            type: string
+            description: 'External shipment number.'
+            examples:
+              - '123455'
+          incoterms1:
+            type: string
+            description: 'Incoterms code (part 1) at delivery header level.'
+            examples:
+              - 'DAT'
+          incoterms2:
+            type: string
+            description: 'Incoterms code (part 2) at delivery header level, if applicable.'
+            examples:
+              - 'TEXT'
+          deliveryType:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Delivery type.'
+                examples:
+                  - 'ZNL'
+                  - 'ZLF'
+                  - 'ZLCC'
+              description:
+                type: string
+                description: 'Delivery type description.'
+                examples:
+                  - 'Delivery'
+          shippingCondition:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Shipping condition.'
+                examples:
+                  - '02'
+              description:
+                type: string
+                description: 'Shipping condition description.'
+                examples:
+                  - 'Road Del Unmtr/Pkg'
+          shippingPoint:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Shipping point.'
+                examples:
+                  - '0UA1'
+              description:
+                type: string
+                description: 'Shipping point description.'
+                examples:
+                  - 'EXPRESS RW (FRD):LUB:0UA1'
+          route:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Route code.'
+                examples:
+                  - 'IN0000'
+              description:
+                type: string
+                description: 'Route description.'
+                examples:
+                  - 'IN General'
+          deliveryPriority:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Delivery priority code.'
+                examples:
+                  - '3'
+              description:
+                type: string
+                description: 'Delivery priority description.'
+                examples:
+                  - 'Group C'
+          salesOrganization:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Sales organization.'
+                examples:
+                  - '7020'
+              description:
+                type: string
+                description: 'Sales organization description.'
+                examples:
+                  - 'EXXONMOBIL LUBRICANTS PRIVATE LIMITED'
+          modeOfTransportation:
+            type: object
+            properties:
+              code:
+                type: string
+                description: 'Mode of transportation code.'
+                examples:
+                  - 'E1'
+              description:
+                type: string
+                description: 'Mode of Transportation description.'
+                examples:
+                  - 'Road'
+          date:
+            type: object
+            properties:
+              plannedGoodsMovementDate:
+                type: string
+                description: 'Date in which the movement of goods is planned.'
+                examples:
+                  - '2021-10-19T16:00:00Z'
+              actualDeliveryDate:
+                type: string
+                description: 'Actual delivery date.'
+                examples:
+                  - '2021-10-19T16:00:00Z'
+              plannedDeliveryDate:
+                type: string
+                description: 'Planned delivery date.'
+                examples:
+                  - '2021-10-19T16:00:00Z'
+              loadingDate:
+                type: string
+                description: 'Loading date.'
+                examples:
+                  - '2021-10-18T16:00:00Z'
+          items:
+            type: array
+            items:
+              type: object
+              properties:
+                number:
+                  type: string
+                  description: 'Delivery line item number.'
+                  examples:
+                    - '000010'
+                materialAvailabilityDate:
+                  type: string
+                  description: 'Material availability date.'
+                  examples:
+                    - '2021-10-18T16:00:00Z'
+                referenceDocumentNumber:
+                  type: string
+                  description: 'Document number (STO/SO) linked to delivery document.'
+                  examples:
+                    - '2312345678'
+                referenceDocumentItemNumber:
+                  type: string
+                  description: 'Corresponding STO/SO line item.'
+                  examples:
+                    - '10'
+                plantCode:
+                  type: string
+                  description: 'Plant code.'
+                  example: '0JH0'
+                material:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: 'Material unique ID.'
+                      example: 'na-101576'
+                    code:
+                      type: string
+                      description: 'Material code.'
+                      example: '101576'
+                documentCategory:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Document category: C (Order), H (Returns), I (Order w/o charge).'
+                      examples:
+                        - 'C'
+                    description:
+                      type: string
+                      description: 'Document category description.'
+                      examples:
+                        - 'Order'
+                distributionChannel:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Distribution channel.'
+                      examples:
+                        - '03'
+                    description:
+                      type: string
+                      description: 'Distribution channel description.'
+                      examples:
+                        - 'Non-Retail'
+                division:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Division.'
+                      examples:
+                        - '04'
+                    description:
+                      type: string
+                      description: 'Division description.'
+                      examples:
+                        - 'Lubes'
+                itemCategory:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Item category code.'
+                      examples:
+                        - 'ZPCK'
+                    description:
+                      type: string
+                      description: 'Item category description.'
+                      examples:
+                        - 'Standard packed item'
+                movementType:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Movement type code as defined by SAP.'
+                      examples:
+                        - '601'
+                    description:
+                      type: string
+                      description: 'Movement type description.'
+                      examples:
+                        - 'GD goods issue:delivery'
+                deliveryQuantity:
+                  type: object
+                  properties:
+                    amount:
+                      type: number
+                      description: 'Actual Delivery Quantity in sales units.'
+                      examples:
+                        - 100
+                    uom:
+                      type: string
+                      description: 'GRDB ISO unit of measure for the actual delivery quantity.'
+                      examples:
+                        - 'EA'
+                deliveryQuantityBase:
+                  type: object
+                  properties:
+                    amount:
+                      type: number
+                      description: 'Actual Delivery Quantity in stock keeping units.'
+                      examples:
+                        - 100
+                    uom:
+                      type: string
+                      description: 'GRDB ISO unit of measure for the actual delivery quantity.'
+                      examples:
+                        - 'EA'
+                additionalActualDeliveryQuantity:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      amount:
+                        type: number
+                        description: 'Additional Actual Delivery Quantity.'
+                        examples:
+                          - 100
+                      uom:
+                        type: string
+                        description: 'GRDB ISO unit of measure for the additional actual delivery quantity.'
+                        examples:
+                          - 'EA'
+    GoodsIssueCreated:
+      summary: Goods Issue created event data
+      tags:
+        - name: PTDS
+        - name: GI
+      payload:
+        type: object
+        properties:
+          eventTimestamp:
+            type: string
+            description: 'Date and time in UTC format when event is created/updated.'
+            examples:
+              - '2021-12-17T06:45:18Z'
+          eventType:
+            type: string
+            description: 'Material movement event type.'
+            examples:
+              - 'GI_CREATED'
+          productTransferId:
+            type: string
+            description: 'In the same transfer flow, the product transfer ID in all documents(STO/DL/GI/GR) are the same.In intra-company, product transfer ID is intra-STO ID. In inter-company, product transfer ID is last STO/PO ID in the same transfer flow.'
+            examples:
+              - 'AP-4900012707'
+          stripeSystem:
+            type: string
+            description: 'Source system defines the source SAP instance from which the stock transfer order was created from.'
+            examples:
+              - 'AP'
+          systemTimeZone:
+            type: string
+            description: 'Source system defines the source SAP instance from which the stock transfer order was created from.'
+            examples:
+              - 'UTC+08:00'
+          postingDate:
+            type: string
+            description: 'Posting date.'
+            examples:
+              - '2021-12-08T09:00:00Z'
+          materialMovementNumber:
+            type: string
+            description: 'Material document number.'
+            examples:
+              - '4000035155'
+          materialDocumentYear:
+            type: string
+            description: 'Material document number will be reused in several years, so we need this field to make material document number to be unique.'
+            examples:
+              - '2021'
+          materialMovementId:
+            type: string
+            description: 'Unique material document ID in different stripe system.'
+            examples:
+              - 'AP-2021-4000035155'
+          items:
+            type: array
+            items:
+              type: object
+              properties:
+                number:
+                  type: string
+                  description: 'Material document Item number.'
+                  examples:
+                    - '0001'
+                deliveryCompletedIndicator:
+                  type: string
+                  description: 'Delivery completed indicator for the material movement associated to the STO.'
+                  examples:
+                    - 'X'
+                stockTransferOrderNumber:
+                  type: string
+                  description: 'It can be used to link with related PO.'
+                  examples:
+                    - '4900012707'
+                stockTransferOrderItemNumber:
+                  type: string
+                  description: 'It can be used to link with related PO line item level.'
+                  examples:
+                    - '00010'
+                deliveryDocumentNumber:
+                  type: string
+                  description: 'Reference to the delivery document when applicable.'
+                  examples:
+                    - '8006255414'
+                deliveryDocumentItemNumber:
+                  type: string
+                  description: 'Reference to the delivery document Item when applicable.'
+                  examples:
+                    - '000010'
+                material:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Material code.'
+                      example: '101576'
+                    description:
+                      type: string
+                      description: 'Material description.'
+                      example: 'SPARTAN EP 220,280LT,DR,MET X1'
+                movementType:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Movement type corresponding to STO movement.'
+                      examples:
+                        - '641'
+                    description:
+                      type: string
+                      description: 'Movement type description.'
+                      examples:
+                        - 'TF to stck in trans.'
+                eventTypeCategory:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Event type category.'
+                      examples:
+                        - '6'
+                    description:
+                      type: string
+                      description: 'Event type category description.'
+                      examples:
+                        - 'Goods Issue for Stock Transfer'
+                historyTypeCategory:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'History category.'
+                      examples:
+                        - 'U'
+                    description:
+                      type: string
+                      description: 'History category description.'
+                      examples:
+                        - 'Goods issue'
+                plant:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'This is a plant associated to the material'
+                      examples:
+                        - '0UA1'
+                    description:
+                      type: string
+                      description: 'Plant description.'
+                      examples:
+                        - 'EXPRESS RW (HR) LWH:LUB:7020'
+                movedQuantity:
+                  type: object
+                  properties:
+                    amount:
+                      type: number
+                      description: 'Amount in the material movement posting.'
+                      examples:
+                        - 10000.001
+                    uom:
+                      type: string
+                      description: 'GRDB ISO UoM in which the material amount was posted.'
+                      examples:
+                        - 'EA'
+                    monetaryAmount:
+                      type: number
+                      description: 'Monetary value (valuation) of the material moved.'
+                      examples:
+                        - 100000000.01
+                    monetaryAmountCurrency:
+                      type: string
+                      description: 'ISO currency in which the previous monetary amount is expressed.'
+                      examples:
+                        - 'INR'
+                debitCredit:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Debit credit indicator.'
+                      examples:
+                        - 'H'
+                    description:
+                      type: string
+                      description: 'Debit credit description.'
+                      examples:
+                        - 'Credit'
+                additionalQuantities:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      amount:
+                        type: number
+                        description: 'Additional quantity.'
+                        examples:
+                          - 10000.001
+                      uom:
+                        type: string
+                        description: 'Additional quantity in sap converted UoM.'
+                        examples:
+                          - 'EA'
+                      isoUom:
+                        type: string
+                        description: 'GRDB ISO UoM.'
+                        examples:
+                          - 'EA'
+    GoodsIssueCancelled:
+      summary: Goods Issue cancelled event data
+      tags:
+        - name: PTDS
+        - name: GI
+      payload:
+        type: object
+        properties:
+          eventTimestamp:
+            type: string
+            description: 'Date and time in UTC format when event is created/updated.'
+            examples:
+              - '2021-12-17T06:45:18Z'
+          eventType:
+            type: string
+            description: 'Material movement event type.'
+            examples:
+              - 'GI_CANCELLED'
+          productTransferId:
+            type: string
+            description: 'In the same transfer flow, the product transfer ID in all documents(STO/DL/GI/GR) are the same.In intra-company, product transfer ID is intra-STO ID. In inter-company, product transfer ID is last STO/PO ID in the same transfer flow.'
+            examples:
+              - 'AP-4900012707'
+          stripeSystem:
+            type: string
+            description: 'Source system defines the source SAP instance from which the stock transfer order was created from.'
+            examples:
+              - 'AP'
+          systemTimeZone:
+            type: string
+            description: 'Source system defines the source SAP instance from which the stock transfer order was created from.'
+            examples:
+              - 'UTC+08:00'
+          postingDate:
+            type: string
+            description: 'Posting date.'
+            examples:
+              - '2021-12-08T09:00:00Z'
+          materialMovementNumber:
+            type: string
+            description: 'Material document number.'
+            examples:
+              - '4000035155'
+          materialDocumentYear:
+            type: string
+            description: 'Material document number will be reused in several years, so we need this field to make material document number to be unique.'
+            examples:
+              - '2021'
+          materialMovementId:
+            type: string
+            description: 'Unique material document ID in different stripe system.'
+            examples:
+              - 'AP-2021-4000035155'
+          items:
+            type: array
+            items:
+              type: object
+              properties:
+                number:
+                  type: string
+                  description: 'Material document Item number.'
+                  examples:
+                    - '0001'
+                deliveryCompletedIndicator:
+                  type: string
+                  description: 'Delivery completed indicator for the material movement associated to the STO.'
+                  examples:
+                    - 'X'
+                stockTransferOrderNumber:
+                  type: string
+                  description: 'It can be used to link with related PO.'
+                  examples:
+                    - '4900012707'
+                stockTransferOrderItemNumber:
+                  type: string
+                  description: 'It can be used to link with related PO line item level.'
+                  examples:
+                    - '00010'
+                deliveryDocumentNumber:
+                  type: string
+                  description: 'Reference to the delivery document when applicable.'
+                  examples:
+                    - '8006255414'
+                deliveryDocumentItemNumber:
+                  type: string
+                  description: 'Reference to the delivery document Item when applicable.'
+                  examples:
+                    - '000010'
+                material:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Material code.'
+                      example: '101576'
+                    description:
+                      type: string
+                      description: 'Material description.'
+                      example: 'SPARTAN EP 220,280LT,DR,MET X1'
+                movementType:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Movement type corresponding to STO movement.'
+                      examples:
+                        - '641'
+                    description:
+                      type: string
+                      description: 'Movement type description.'
+                      examples:
+                        - 'TF to stck in trans.'
+                eventTypeCategory:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Event type category.'
+                      examples:
+                        - '6'
+                    description:
+                      type: string
+                      description: 'Event type category description.'
+                      examples:
+                        - 'Goods Issue for Stock Transfer'
+                historyTypeCategory:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'History category.'
+                      examples:
+                        - 'U'
+                    description:
+                      type: string
+                      description: 'History category description.'
+                      examples:
+                        - 'Goods issue'
+                plant:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'This is a plant associated to the material.'
+                      examples:
+                        - '0UA1'
+                    description:
+                      type: string
+                      description: 'Plant description.'
+                      examples:
+                        - 'EXPRESS RW (HR) LWH:LUB:7020'
+                movedQuantity:
+                  type: object
+                  properties:
+                    amount:
+                      type: number
+                      description: 'Amount in the material movement posting.'
+                      examples:
+                        - 10000.001
+                    uom:
+                      type: string
+                      description: 'GRDB ISO UoM in which the material amount was posted.'
+                      examples:
+                        - 'EA'
+                    monetaryAmount:
+                      type: number
+                      description: 'Monetary value (valuation) of the material moved.'
+                      examples:
+                        - 100000000.01
+                    monetaryAmountCurrency:
+                      type: string
+                      description: 'ISO currency in which the previous monetary amount is expressed.'
+                      examples:
+                        - 'INR'
+                debitCredit:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Debit credit indicator.'
+                      examples:
+                        - 'H'
+                    description:
+                      type: string
+                      description: 'Debit credit description.'
+                      examples:
+                        - 'Credit'
+                additionalQuantities:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      amount:
+                        type: number
+                        description: 'Additional quantity.'
+                        examples:
+                          - 10000.001
+                      uom:
+                        type: string
+                        description: 'Additional quantity in sap converted UoM.'
+                        examples:
+                          - 'EA'
+                      isoUom:
+                        type: string
+                        description: 'GRDB ISO UoM.'
+                        examples:
+                          - 'EA'
+    GoodsReceiptCreated:
+      summary: Goods Receipt created event data
+      tags:
+        - name: PTDS
+        - name: GR
+      payload:
+        type: object
+        properties:
+          eventTimestamp:
+            type: string
+            description: 'Date and time in UTC format when event is created/updated.'
+            examples:
+              - '2021-12-17T06:45:18Z'
+          eventType:
+            type: string
+            description: 'Material movement event type.'
+            examples:
+              - 'GR_CREATED'
+          productTransferId:
+            type: string
+            description: 'In the same transfer flow, the product transfer ID in all documents(STO/DL/GI/GR) are the same.In intra-company, product transfer ID is intra-STO ID. In inter-company, product transfer ID is last STO/PO ID in the same transfer flow.'
+            examples:
+              - 'AP-4900012707'
+          stripeSystem:
+            type: string
+            description: 'Source system defines the source SAP instance from which the stock transfer order was created from.'
+            examples:
+              - 'AP'
+          systemTimeZone:
+            type: string
+            description: 'Source system defines the source SAP instance from which the stock transfer order was created from.'
+            examples:
+              - 'UTC+08:00'
+          postingDate:
+            type: string
+            description: 'Posting date.'
+            examples:
+              - '2021-12-08T09:00:00Z'
+          materialMovementNumber:
+            type: string
+            description: 'Material document number.'
+            examples:
+              - '4000035155'
+          materialDocumentYear:
+            type: string
+            description: 'Material document number will be reused in several years, so we need this field to make material document number to be unique.'
+            examples:
+              - '2021'
+          materialMovementId:
+            type: string
+            description: 'Unique material document ID in different stripe system.'
+            examples:
+              - 'AP-2021-4000035155'
+          items:
+            type: array
+            items:
+              type: object
+              properties:
+                number:
+                  type: string
+                  description: 'Material document Item number.'
+                  examples:
+                    - '0001'
+                deliveryCompletedIndicator:
+                  type: string
+                  description: 'Delivery completed indicator for the material movement associated to the STO.'
+                  examples:
+                    - 'X'
+                stockTransferOrderNumber:
+                  type: string
+                  description: 'It can be used to link with related PO.'
+                  examples:
+                    - '4900012707'
+                stockTransferOrderItemNumber:
+                  type: string
+                  description: 'It can be used to link with related PO line item level.'
+                  examples:
+                    - '00010'
+                deliveryDocumentNumber:
+                  type: string
+                  description: 'Reference to the delivery document when applicable.'
+                  examples:
+                    - '8006255414'
+                deliveryDocumentItemNumber:
+                  type: string
+                  description: 'Reference to the delivery document Item when applicable.'
+                  examples:
+                    - '000010'
+                material:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Material code.'
+                      example: '101576'
+                    description:
+                      type: string
+                      description: 'Material description.'
+                      example: 'SPARTAN EP 220,280LT,DR,MET X1'
+                movementType:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Movement type corresponding to STO movement.'
+                      examples:
+                        - '641'
+                    description:
+                      type: string
+                      description: 'Movement type description.'
+                      examples:
+                        - 'TF to stck in trans.'
+                eventTypeCategory:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Event type category.'
+                      examples:
+                        - '6'
+                    description:
+                      type: string
+                      description: 'Event type category description.'
+                      examples:
+                        - 'Goods Issue for Stock Transfer'
+                historyTypeCategory:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'History category.'
+                      examples:
+                        - 'U'
+                    description:
+                      type: string
+                      description: 'History category description.'
+                      examples:
+                        - 'Goods issue'
+                plant:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'This is a plant associated to the material'
+                      examples:
+                        - '0UA1'
+                    description:
+                      type: string
+                      description: 'Plant description.'
+                      examples:
+                        - 'EXPRESS RW (HR) LWH:LUB:7020'
+                movedQuantity:
+                  type: object
+                  properties:
+                    amount:
+                      type: number
+                      description: 'Amount in the material movement posting'
+                      examples:
+                        - 10000.001
+                    uom:
+                      type: string
+                      description: 'GRDB ISO UoM in which the material amount was posted.'
+                      examples:
+                        - 'EA'
+                    monetaryAmount:
+                      type: number
+                      description: 'Monetary value (valuation) of the material moved.'
+                      examples:
+                        - 100000000.01
+                    monetaryAmountCurrency:
+                      type: string
+                      description: 'ISO currency in which the previous monetary amount is expressed.'
+                      examples:
+                        - 'INR'
+                debitCredit:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Debit credit indicator.'
+                      examples:
+                        - 'H'
+                    description:
+                      type: string
+                      description: 'Debit credit description.'
+                      examples:
+                        - 'Credit'
+                additionalQuantities:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      amount:
+                        type: number
+                        description: 'Additional quantity.'
+                        examples:
+                          - 10000.001
+                      uom:
+                        type: string
+                        description: 'Additional quantity in sap converted UoM.'
+                        examples:
+                          - 'EA'
+                      isoUom:
+                        type: string
+                        description: 'GRDB ISO UoM.'
+                        examples:
+                          - 'EA'
+    GoodsReceiptCancelled:
+      summary: Goods Receipt cancelled event data
+      tags:
+        - name: PTDS
+        - name: GR
+      payload:
+        type: object
+        properties:
+          eventTimestamp:
+            type: string
+            description: 'Date and time in UTC format when event is created/updated.'
+            examples:
+              - '2021-12-17T06:45:18Z'
+          eventType:
+            type: string
+            description: 'Material movement event type.'
+            examples:
+              - 'GR_CANCELLED'
+          productTransferId:
+            type: string
+            description: 'In the same transfer flow, the product transfer ID in all documents(STO/DL/GI/GR) are the same.In intra-company, product transfer ID is intra-STO ID. In inter-company, product transfer ID is last STO/PO ID in the same transfer flow.'
+            examples:
+              - 'AP-4900012707'
+          stripeSystem:
+            type: string
+            description: 'Source system defines the source SAP instance from which the stock transfer order was created from.'
+            examples:
+              - 'AP'
+          systemTimeZone:
+            type: string
+            description: 'Source system defines the source SAP instance from which the stock transfer order was created from.'
+            examples:
+              - 'UTC+08:00'
+          postingDate:
+            type: string
+            description: 'Posting date.'
+            examples:
+              - '2021-12-08T09:00:00Z'
+          materialMovementNumber:
+            type: string
+            description: 'Material document number.'
+            examples:
+              - '4000035155'
+          materialDocumentYear:
+            type: string
+            description: 'Material document number will be reused in several years, so we need this field to make material document number to be unique.'
+            examples:
+              - '2021'
+          materialMovementId:
+            type: string
+            description: 'Unique material document ID in different stripe system.'
+            examples:
+              - 'AP-2021-4000035155'
+          items:
+            type: array
+            items:
+              type: object
+              properties:
+                number:
+                  type: string
+                  description: 'Material document Item number.'
+                  examples:
+                    - '0001'
+                deliveryCompletedIndicator:
+                  type: string
+                  description: 'Delivery completed indicator for the material movement associated to the STO.'
+                  examples:
+                    - 'X'
+                stockTransferOrderNumber:
+                  type: string
+                  description: 'It can be used to link with related PO.'
+                  examples:
+                    - '4900012707'
+                stockTransferOrderItemNumber:
+                  type: string
+                  description: 'It can be used to link with related PO line item level.'
+                  examples:
+                    - '00010'
+                deliveryDocumentNumber:
+                  type: string
+                  description: 'Reference to the delivery document when applicable.'
+                  examples:
+                    - '8006255414'
+                deliveryDocumentItemNumber:
+                  type: string
+                  description: 'Reference to the delivery document Item when applicable.'
+                  examples:
+                    - '000010'
+                material:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Material code.'
+                      example: '101576'
+                    description:
+                      type: string
+                      description: 'Material description.'
+                      example: 'SPARTAN EP 220,280LT,DR,MET X1'
+                movementType:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Movement type corresponding to STO movement.'
+                      examples:
+                        - '641'
+                    description:
+                      type: string
+                      description: 'Movement type description.'
+                      examples:
+                        - 'TF to stck in trans.'
+                eventTypeCategory:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Event type category.'
+                      examples:
+                        - '6'
+                    description:
+                      type: string
+                      description: 'Event type category description.'
+                      examples:
+                        - 'Goods Issue for Stock Transfer'
+                historyTypeCategory:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'History category.'
+                      examples:
+                        - 'U'
+                    description:
+                      type: string
+                      description: 'History category description.'
+                      examples:
+                        - 'Goods issue'
+                plant:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'This is a plant associated to the material.'
+                      examples:
+                        - '0UA1'
+                    description:
+                      type: string
+                      description: 'Plant description.'
+                      examples:
+                        - 'EXPRESS RW (HR) LWH:LUB:7020'
+                movedQuantity:
+                  type: object
+                  properties:
+                    amount:
+                      type: number
+                      description: 'Amount in the material movement posting'
+                      examples:
+                        - 10000.001
+                    uom:
+                      type: string
+                      description: 'GRDB ISO UoM in which the material amount was posted.'
+                      examples:
+                        - 'EA'
+                    monetaryAmount:
+                      type: number
+                      description: 'Monetary value (valuation) of the material moved.'
+                      examples:
+                        - 100000000.01
+                    monetaryAmountCurrency:
+                      type: string
+                      description: 'ISO currency in which the previous monetary amount is expressed.'
+                      examples:
+                        - 'INR'
+                debitCredit:
+                  type: object
+                  properties:
+                    code:
+                      type: string
+                      description: 'Debit credit indicator.'
+                      examples:
+                        - 'H'
+                    description:
+                      type: string
+                      description: 'Debit credit description.'
+                      examples:
+                        - 'Credit'
+                additionalQuantities:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      amount:
+                        type: number
+                        description: 'Additional quantity.'
+                        examples:
+                          - 10000.001
+                      uom:
+                        type: string
+                        description: 'Additional quantity in sap converted UoM.'
+                        examples:
+                          - 'EA'
+                      isoUom:
+                        type: string
+                        description: 'GRDB ISO UoM.'
+                        examples:
+                          - 'EA'
